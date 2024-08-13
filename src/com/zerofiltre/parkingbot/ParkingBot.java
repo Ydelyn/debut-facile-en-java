@@ -23,10 +23,9 @@ public class ParkingBot {
     vehicle.setRegistrationNumber("LS-324-PM");
     Ticket vehicleTicket = parkingService.processIncomingVehicle(vehicle);
     System.out.println(vehicleTicket);
-
+    parkingService.processExitingVehicle(vehicleTicket);
+    System.out.println(vehicleTicket);
 
 
   }
-
-
 }
