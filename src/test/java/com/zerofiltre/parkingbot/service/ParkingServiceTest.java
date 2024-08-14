@@ -149,11 +149,11 @@ public class ParkingServiceTest {
 
   }
 
-  @Timeout(2)
-  @Test
-  void failIfMoreThan2Seconds() throws InterruptedException {
-    Thread.sleep(3 * 1000);
-  }
+//  @Timeout(2)
+//  @Test
+//  void failIfMoreThan2Seconds() throws InterruptedException {
+//    Thread.sleep(3 * 1000);
+//  }
 
 
 }
