@@ -44,7 +44,11 @@ public class ParkingBot {
 
     System.out.println("Début du traitement de sorties en lot de " + tickets.size() + " véhicules");
     for (int i = 0; i < tickets.size(); i++) {
-        System.out.println(parkingService.processExitingVehicle(tickets.get(i + 1)));
+        try {
+            System.out.println(parkingService.processExitingVehicle(tickets.get(i + 1)));
+        } catch (Exception e) {
+          System.out.println("Une erreur est survenue lors de la sortie de 1 ou plusieurs véhicules");
+        }
     }
     System.out.println("Fin du traitement des sorties par lot");
 
