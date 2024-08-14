@@ -5,12 +5,18 @@ import com.zerofiltre.parkingbot.model.Car;
 import com.zerofiltre.parkingbot.model.Ticket;
 import com.zerofiltre.parkingbot.model.Vehicle;
 import com.zerofiltre.parkingbot.service.ParkingService;
+import com.zerofiltre.parkingbot.util.Printer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingBot {
 
+  public static final String REGISTRATION_NUMBER_1 = "LS-324-PM";
+  public static final String REGISTRATION_NUMBER_2 = "PM-254-OP";
+  public static final String REGISTRATION_NUMBER_3 = "BX-256-QX";
   static ParkingService parkingService = new ParkingService();
+  static Printer printer;
 
   /**
    * Ceci est la méthode Main
@@ -18,6 +24,7 @@ public class ParkingBot {
    * @param args : Tableau de données entrées lors du lancement de l'application
    */
   public static void main(String[] args) {
+    printer = System.out::println;
     processVehicles();
   }
 
@@ -25,32 +32,32 @@ public class ParkingBot {
     List<Ticket> tickets = new ArrayList<>();
 
     Vehicle vehicle = new Vehicle();
-    vehicle.setRegistrationNumber("LS-324-PM");
+    vehicle.setRegistrationNumber(REGISTRATION_NUMBER_1);
     Ticket vehicleTicket = parkingService.processIncomingVehicle(vehicle);
-    System.out.println(vehicleTicket);
+    printer.print(vehicleTicket);
     tickets.add(vehicleTicket);
 
     Vehicle bicycle = new Bicycle();
-    bicycle.setRegistrationNumber("PM-254-OP");
+    bicycle.setRegistrationNumber(REGISTRATION_NUMBER_2);
     Ticket bicycleTicket = parkingService.processIncomingVehicle(bicycle);
-    System.out.println(bicycleTicket);
+    printer.print(bicycleTicket);
     tickets.add(bicycleTicket);
 
     Vehicle car = new Car();
-    bicycle.setRegistrationNumber("BX-256-QX");
+    bicycle.setRegistrationNumber(REGISTRATION_NUMBER_3);
     Ticket carTicket = parkingService.processIncomingVehicle(car);
-    System.out.println(carTicket);
+    printer.print(carTicket);
     tickets.add(carTicket);
 
-    System.out.println("Début du traitement de sorties en lot de " + tickets.size() + " véhicules");
-    for (int i = 0; i < tickets.size(); i++) {
-      try {
-        System.out.println(parkingService.processExitingVehicle(tickets.get(i)));
-      } catch (Exception e) {
-        System.out.println("Une erreur est survenue lors de la sortie d'un ou plusieurs véhicules");
-      }
+    printer.print("Début du traitement de sorties en lot de " + tickets.size() + " véhicules");
+    for (Ticket ticket : tickets) {
+        try {
+            printer.print(parkingService.processExitingVehicle(ticket));
+        } catch (Exception e) {
+            printer.print("Une erreur est survenue lors de la sortie d'un ou plusieurs véhicules");
+        }
     }
-    System.out.println("Fin du traitement des sorties par lot");
+    printer.print("Fin du traitement des sorties par lot");
 
   }
 
