@@ -1,8 +1,5 @@
 package com.zerofiltre.parkingbot.service;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-
 import com.zerofiltre.parkingbot.error.NoMoreSpotException;
 import com.zerofiltre.parkingbot.model.Bicycle;
 import com.zerofiltre.parkingbot.model.Car;
@@ -17,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class ParkingServiceTest {
@@ -74,9 +73,16 @@ public class ParkingServiceTest {
   }
 
   @Test
+  void givenSomeFreeSpot_processIncomingVehicle_doNotThrowAnyException() {
+    parking.setFreeSpots(2);
+    assertThatNoException().isThrownBy(() -> parkingService.processIncomingVehicle(vehicle, parking));
+  }
+
+  @Test
   void givenAVehicle_processIncomingVehicle_generatesTicketWithRightTime() throws NoMoreSpotException {
     //given
     Date now = new Date();
+    parking.setFreeSpots(5);
 
     //when : Enregistrer le véhicule
     Ticket ticket = parkingService.processIncomingVehicle(vehicle, parking);
